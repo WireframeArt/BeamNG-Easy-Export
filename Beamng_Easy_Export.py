@@ -240,12 +240,13 @@ classes = [BngexportProperties,BNGEXPORT_PT_main_panel,BNGEXPORT_OT_export_op]
 def register():
     for cls in classes:
         bpy.utils.register_class(cls)
-        bpy.types.Scene.bngexport_tools = bpy.props.PointerProperty(type= BngexportProperties)
+    bpy.types.Scene.bngexport_tools = bpy.props.PointerProperty(type= BngexportProperties)
+        
  
 def unregister():
+    del bpy.types.Scene.bngexport_tools
     for cls in classes:
         bpy.utils.unregister_class(cls)
-    bpy.utils.unregister_class(bpy.types.Scene.bngexport_tools)
  
  
  
