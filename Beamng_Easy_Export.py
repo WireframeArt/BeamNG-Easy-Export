@@ -51,7 +51,7 @@ class BngexportProperties(bpy.types.PropertyGroup):
     
               
 class BNGEXPORT_PT_main_panel(bpy.types.Panel):
-    bl_label = "Beamng Easy Export"
+    bl_label = "BeamNG Easy Export"
     bl_idname = "BNGEXPORT_PT_main_panel"
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
