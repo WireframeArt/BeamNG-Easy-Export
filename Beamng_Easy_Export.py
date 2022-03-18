@@ -45,8 +45,11 @@ class BngexportProperties(bpy.types.PropertyGroup):
     lod5_object_prop : PointerProperty(type=bpy.types.Object, name="LOD 5", description="LOD Object")
     lod5_pixel_size : IntProperty(name="", description="Pixel Size for LOD")
     auto_billboard_prop : BoolProperty(name="Generate Autobillboard", description="Adds an empty object that BeamNG will use to create a billboard object")
+    auto_billboard_pixel_size : IntProperty(name="Billboard Pixel Size", description="Pixel Size for Billboard")
+    null_detail_prop : BoolProperty(name="Add Null Detail", description="Adds an empty object that will tell BeamNG when to cull object")
+    null_detail_pixel_size : IntProperty(name="Null Detail Pixel Size", description="Pixel Size for Null Detail")
     apply_modifiers : BoolProperty(name="Apply Modifiers", description="Applies modifiers on export")
-    auto_billboard_pixel_size : IntProperty(name="billboard pixel size", description="Pixel Size for Billboard")
+
     origin_object_prop : PointerProperty(type=bpy.types.Object, name="Center", description="Will set the center of the Exported Object to this Object, if blank the center will be at 0,0,0" )
     
               
@@ -83,6 +86,9 @@ class BNGEXPORT_PT_main_panel(bpy.types.Panel):
         row = layout.row()
         row.prop(bngexporttools, "auto_billboard_prop")
         row.prop(bngexporttools, "auto_billboard_pixel_size")
+        row = layout.row()
+        row.prop(bngexporttools, "null_detail_prop")
+        row.prop(bngexporttools, "null_detail_pixel_size")
         layout.prop(bngexporttools, "apply_modifiers")
         layout.prop(bngexporttools, "collision_object_prop")
         layout.prop(bngexporttools, "origin_object_prop")
@@ -169,6 +175,21 @@ class BNGEXPORT_OT_export_op(bpy.types.Operator):
             self.setcollection(targetcol=exportcol, targetobj=billboard)
             billboard.parent = base
             billboard.matrix_parent_inverse = base.matrix_world.inverted()
+            
+        if bngexporttools.null_detail_prop:
+            nulldetailsize = bngexporttools.null_detail_pixel_size
+            bpy.ops.object.select_all(action='DESELECT')
+            bpy.ops.object.empty_add(type='PLAIN_AXES', align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+            nulldetail = bpy.context.selected_objects[0]
+            
+            nulldetailname = ("nulldetail" + str(nulldetailsize))
+            self.duplicatecheck(dupliname=nulldetailname)    
+            nulldetail.name = nulldetailname
+            self.setcollection(targetcol=exportcol, targetobj=nulldetail)
+            nulldetail.parent = base
+            nulldetail.matrix_parent_inverse = base.matrix_world.inverted()
+            
+
                 
         if bngexporttools.collision_object_prop:
             colmesh = bngexporttools.collision_object_prop
@@ -208,7 +229,7 @@ class BNGEXPORT_OT_export_op(bpy.types.Operator):
         print("it worked and dupliname is " + dupliname)
         for o in bpy.data.objects:
             if o.name == dupliname:
-                o.name = (o.name + "_BexportRename.001")
+                o.name = (o.name + ".001")
                 print("Renamed Duplicate")
         return {'FINISHED'}
     
@@ -226,7 +247,7 @@ class BNGEXPORT_OT_export_op(bpy.types.Operator):
         bpy.ops.object.duplicate({"object" : currentlod,"selected_objects" : [currentlod]}, linked=False)
         loddup = bpy.context.selected_objects[0]
         
-        dupname = (bngexporttools.object_name_prop + str(pixelsize))
+        dupname = (bngexporttools.object_name_prop +"_d"+str(pixelsize))
         self.duplicatecheck(dupliname=dupname)
         loddup.name = dupname
         self.setcollection(targetcol=tmpcol, targetobj=loddup)
