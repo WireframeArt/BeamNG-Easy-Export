@@ -10,7 +10,8 @@ Enable the Addon
 ---Use---
 
 Navigate to Properties > Scene > BeamNG Easy Export and configure all of the settings then select export objects
-
+To save the current export configuration click on the three dots at the top right of the easy export menu,
+enter a name and select the + icon.
 ---Info---
 
 Pixel size is the amount of pixels an object has to take up before it switches, so if your lod pixel size is 500 when the object is 500 pixels on the screen it will switch to the next lod.
