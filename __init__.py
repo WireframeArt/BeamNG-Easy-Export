@@ -17,7 +17,7 @@ bl_info = {
     "name": "Beamng Easy Export",
     "author": "Damian Paterson / Wireframe Art",
     "version": (2, 0),
-    "blender": (3, 0, 0),
+    "blender": (3, 6, 1),
     "location": "Properties > Scene > Beamng Easy Export",
     "description": "A tool to simplify the process of exporting Collada files for BeamngNG",
     "category": "Export",
