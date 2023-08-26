@@ -16,11 +16,34 @@
 bl_info = {
     "name": "Beamng Easy Export",
     "author": "Damian Paterson / Wireframe Art",
-    "version": (1, 0),
+    "version": (2, 0),
     "blender": (3, 0, 0),
     "location": "Properties > Scene > Beamng Easy Export",
     "description": "A tool to simplify the process of exporting Collada files for BeamngNG",
     "category": "Export",
 }
 
-from .Beamng_Easy_Export import *
+from .LODUIList import *
+from .export_bng_object import *
+from .bng_export_ui import *
+from bpy.props import CollectionProperty
+
+
+classes = [BngexportProperties, BNGEXPORT_PT_main_panel, BNGEXPORT_OT_export_op, MT_ExportPresets, OT_AddExportPreset,MY_PT_presets, LOD_UL_List, LodProperties, LIST_OT_NewItem, LIST_OT_DeleteItem, LIST_OT_MoveItem] 
+
+def register():
+    for cls in classes:
+        bpy.utils.register_class(cls)
+    bpy.types.Scene.bngexport_tools = bpy.props.PointerProperty(type=BngexportProperties)
+    bpy.types.Scene.lod_list = CollectionProperty(type=LodProperties)
+    bpy.types.Scene.list_index = IntProperty(name="Index for lod_list", default = 0)
+ 
+def unregister():
+    del bpy.types.Scene.bngexport_tools
+    del bpy.types.Scene.lod_list
+    del bpy.types.Scene.list_index
+    for cls in classes:
+        bpy.utils.unregister_class(cls)
+ 
+if __name__ == "__main__":
+    register()
