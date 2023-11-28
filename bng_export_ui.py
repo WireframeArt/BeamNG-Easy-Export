@@ -1,23 +1,10 @@
-#    <Beamng Easy Export, Blender addon for exporting objects to BeamNG.>
-#    Copyright (C) <2023> <Damian Paterson>
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program. If not, see <http://www.gnu.org/licenses/>.
-
 import bpy
 from bpy.props import StringProperty
 from bl_operators.presets import AddPresetBase
 from bl_ui.utils import PresetPanel 
 from bpy.types import Panel, Menu
+
+
 
 class BngexportProperties(bpy.types.PropertyGroup):
     export_file_path : bpy.props.StringProperty(name="export path",description="Directory Collada File will be exported to",subtype='DIR_PATH')
@@ -32,7 +19,7 @@ class BNGEXPORT_PT_main_panel(bpy.types.Panel):
     bl_category = "Beamng Easy Export"
     
     def draw_header_preset(self, _context): 
-        MY_PT_presets.draw_panel_header(self.layout)
+        BNGE_PT_presets.draw_panel_header(self.layout)
     
     def draw(self, context):
         layout = self.layout
@@ -74,16 +61,16 @@ class BNGEXPORT_PT_main_panel(bpy.types.Panel):
                 
 #---Creates Presets---#
 
-class MT_ExportPresets(Menu): 
-    bl_label = 'My Presets' 
-    preset_subdir = 'object/my_presets' 
+class BNGE_MT_ExportPresets(Menu): 
+    bl_label = 'Export Presets' 
+    preset_subdir = 'BNGExport/export_presets'
     preset_operator = 'script.execute_preset' 
     draw = Menu.draw_preset
 
 class OT_AddExportPreset(AddPresetBase, bpy.types.Operator):
-    bl_idname = 'my.add_preset'
+    bl_idname = 'bnge.add_preset'
     bl_label = 'Add A preset'
-    preset_menu = 'MT_MyPresets'
+    preset_menu = 'BNGE_MT_ExportPresets'
         
     # Common variable used for all preset values
     preset_defines = [
@@ -100,11 +87,11 @@ class OT_AddExportPreset(AddPresetBase, bpy.types.Operator):
                     ]
                     
     # Directory to store the presets
-    preset_subdir = 'object/my_presets'
+    preset_subdir = 'BNGExport/export_presets'
     
-class MY_PT_presets(PresetPanel, Panel): 
-    bl_label = 'My Presets' 
-    preset_subdir = 'object/my_presets' 
+class BNGE_PT_presets(PresetPanel, Panel): 
+
+    bl_label = 'Export Presets' 
+    preset_subdir = 'BNGExport/export_presets'
     preset_operator = 'script.execute_preset' 
-    preset_add_operator = 'my.add_preset'
-                      
+    preset_add_operator = 'bnge.add_preset'
