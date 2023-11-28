@@ -16,8 +16,8 @@
 bl_info = {
     "name": "Beamng Easy Export",
     "author": "Damian Paterson / Wireframe Art",
-    "version": (2, 0),
-    "blender": (3, 6, 1),
+    "version": (2, 1),
+    "blender": (4, 0, 0),
     "location": "Properties > Scene > Beamng Easy Export",
     "description": "A tool to simplify the process of exporting Collada files for BeamngNG",
     "category": "Export",
@@ -29,7 +29,7 @@ from .bng_export_ui import *
 from bpy.props import CollectionProperty
 
 
-classes = [BngexportProperties, BNGEXPORT_PT_main_panel, BNGEXPORT_OT_export_op, MT_ExportPresets, OT_AddExportPreset,MY_PT_presets, LOD_UL_List, LodProperties, LIST_OT_NewItem, LIST_OT_DeleteItem, LIST_OT_MoveItem] 
+classes = [BngexportProperties, BNGEXPORT_PT_main_panel, BNGEXPORT_OT_export_op, BNGE_MT_ExportPresets, OT_AddExportPreset,BNGE_PT_presets, LOD_UL_List, LodProperties, LIST_OT_NewItem, LIST_OT_DeleteItem, LIST_OT_MoveItem] 
 
 def register():
     for cls in classes:
