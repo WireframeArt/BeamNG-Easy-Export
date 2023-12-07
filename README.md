@@ -16,6 +16,5 @@ enter a name and select the + icon.
 ---Info---
 
 Pixel size is the amount of pixels an object has to take up before it switches, so if your lod pixel size is 500 when the object is 500 pixels on the screen it will switch to the next lod.
-Billboards are the 2D low res versions of the object that always face the camera.
-You don't have to have 5 lods, if you leave some lods blank the object will still export.
+Auto Billboards are the 2D low res versions of the object that always face the camera.
 The center object is where the center of your exported object will be, it will default to 0,0,0 if you don't set it
